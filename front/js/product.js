@@ -15,6 +15,11 @@ const produitName =  document.getElementById("title");
 const produitPrice = document.getElementById("price");
 const produitDescription = document.getElementById("description");
 const img = document.createElement("img");
+let ProduitColors = document.getElementById("colors");
+
+
+
+
 
 /**afficher le produit selectioné */
 fetch('http://127.0.0.1:3000/api/products/'+id)
@@ -26,12 +31,21 @@ fetch('http://127.0.0.1:3000/api/products/'+id)
     produitName.textContent = produit.name;
     produitPrice.textContent = produit.price;
     produitDescription.textContent = produit.description;
+    for (let color of produit.colors){
+        let optionColor = document.createElement("option");
+        optionColor.setAttribute("value", color );
+        optionColor.textContent = color;
+        ProduitColors.appendChild(optionColor)
+    } 
    
-produitImage.appendChild(img);
+
+  
 
 
     
 });
+
+
 
 
 
