@@ -18,13 +18,15 @@ const img = document.createElement("img");
 let ProduitColors = document.getElementById("colors");
 let qteProduit = document.getElementById("quantity");
 let ajouterProduit = document.getElementById("addToCart");
-const button = document.querySelector("addToCart");
+const btn = document.createElement("btn");
+
+const cart = document.getElementById("quantity");
 
 /*recuperer les data local storage avec la cle infoPanier*/
 
 // fonctions local storage
 function getPanier() {
-  let infoPanier =
+  let infoPanier =z
     localStorage.getItem(
       "produitPanier"
     ); /*(fausse clef), info panier data local storage*/
@@ -66,8 +68,9 @@ savePanier(infoPanier);
 console.log(infoPanier);
 }
 
-
-
+//Le panier est un tableau de produits
+let panierInit = [];
+localStorage.setItem("userPanier", JSON.stringify(panierInit));
 
 /**afficher le produit selectioné */
 fetch("http://127.0.0.1:3000/api/products/" + id)
@@ -85,16 +88,16 @@ fetch("http://127.0.0.1:3000/api/products/" + id)
       optionColor.textContent = color;
       ProduitColors.appendChild(optionColor);
     }
-    ajouterProduit.addEventListener("click", function()
-    {
-      ajouterPanier();
-      console.log("produit ajouté");
-  
-    });
+    ajouterProduit.addEventListener('click', function(){
+     if (confirm('votre produit a bien été ajouté au panier. \r\n Pour consulter votre panier cliquez sur "ok". \r\n Pour continuer votre commande cliquez sur "annuler"')){
+       window.location.href = "./cart.html";
 
+     }
 
-    button.addEventListener('click', function(){
-    ajouterProduit.style.color = red;
-    ajouterProduit.classList.toggle(addToCart)
+     
+      
+
     })
+
+
   });
