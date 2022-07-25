@@ -7,8 +7,6 @@ let produitContenu = "";
 let produitDescription = "";
 let produitName = "";
 let produitColors = "";
-// cart update
-let newColor = "";
 let produitPrix = "";
 let produitSettings = "";
 let produitSettingsQuantite = "";
@@ -28,7 +26,6 @@ function creationElementHtml() {
   produitDescription = document.createElement("div");
   produitName = document.createElement("h2");
   produitColors = document.createElement("p");
-  newColor = document.createElement(cartButton);
   produitPrix = document.createElement("p");
   produitSettings = document.createElement("div");
   produitSettingsQuantite = document.createElement("div");
@@ -53,7 +50,6 @@ function creationElementHtml() {
   produitContenu.appendChild(produitSettingsDelete);
   // produitSettingsDelete.appendChild(produitSupprime);
   produitSettingsDelete.appendChild(button);
-  produitColors.appendChild(newColor);
 }
 
 function ajouterClass() {
@@ -69,7 +65,6 @@ function ajouterClass() {
   // produitSupprime.classList.add("deleteItem");
   button.classList.add("deleteItem");
   produitQuantite.classList.add("itemQuantity");
-  newColor.classList.add("cartButton");
 }
 
 // fonction pour enregister data ds local storage
