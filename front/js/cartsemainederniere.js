@@ -21,6 +21,7 @@ let orderId = document.querySelector("cartAndFormContainer");
 let cartForm = "";
 let submitForm = document.querySelector("order");
 
+
 function creationElementHtml() {
   article = document.createElement("article");
   img = document.createElement("img");
@@ -116,8 +117,8 @@ function InsererInfoProduit(data) {
   quantite.textContent = "Qté: ";
   // produitSupprime.textContent = "supprimer";
   button.textContent = "supprimer";
-  cartForm.setAttribute("name", "formulaire");
-  cartForm.setAttribute("id", "id_form");
+  // cartForm.setAttribute("name", "formulaire");
+  // cartForm.setAttribute("id", "id_form");
 }
 
 function afficheTotalQuantitePrix() {
@@ -153,11 +154,9 @@ function bindEvents(id) {
     updateItemFromCart(id, null, el.value);
   });
 
-  button.addEventListener('click', function(event){
-    let buttonClicked = event.target
-    buttonClicked.parentElement.parentElement.parentElement.remove()
-  })
-  
+  // submitForm.addEventListener("onclick", function(bindEvents){
+  //   console.log("hi");
+  // });
 }
 
 function afficherProduit() {
@@ -202,11 +201,13 @@ function updateItemFromCart(productId, newQuantity, newColor) {
   }
 }
 
+
 function commander() {
   let boutonCommander = document.getElementById("order");
-  boutonCommander.addEventListener("click", function (event) {
-    return totalPrix;
-  });
+  boutonCommander.addEventListener('click', function (event) {
+    return totalPrix
+    
+  })
 }
 // const formSubmit = document.querySelector("cartAndFormContainer").addEventListener('submit', function commander(event) {
 //   if(!isValid){
@@ -215,35 +216,28 @@ function commander() {
 // //do whatever an submit the form
 // });
 
-const form = document.querySelector("#formSubmit");
 
+const form = document.querySelector("#formSbmit");
 form.addEventListener("submit", function onSubmit(e) {
   e.preventDefault();
-  const formData = new FormData(form);
-  const firstName = formData.get("firstName");
-  const lastName = formData.get("lastName");
-  const email = formData.get("email");
-  const address = formData.get("address");
-  const city = formData.get("city");
-
-  const contact = { firstName, lastName, address, city, email };
-  const products = getPanier().map(function (product) {
-    return product.id;
-  });
-  console.log("contacts", contact);
-  console.log("products", products);
-  fetch(apiUrl + "order", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ contact, products, test: "test" }),
-  })
-    .then((responseData) => responseData.json())
-    .then(
-      (response) =>
-        (window.location.href =
-          "./confirmation.html?orderId=" + response.orderId)
-    );
+  
 });
 
+const prenom = document.getElementsByClassName("cart__order__form__question");
+const nom = document.getElementsByClassName("cart__order__form__question");
+const mail = document.getElementsByClassName("cart__order__form__question");
+const message = document.getElementsByClassName("cart__order__form__question");
+
+// je detecte la validation du formulaire
+if (typeof form === 'object' && form !== null && 'addEventListener' in form) {
+  form.addEventListener('click', function onClick() {
+    e.preventDefault();
+    console.log('formulaire envoyé');
+  });
+}
+  
 afficherProduit();
 afficheTotalQuantitePrix();
+
+
+

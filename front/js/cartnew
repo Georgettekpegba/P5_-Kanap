@@ -86,7 +86,7 @@ function getPanier() {
     return JSON.parse(infoPanier);
   }
 }
-
+ 
 function InsererInfoProduit(data) {
   const panier = getPanier();
   const indexProduit = panier.findIndex((product) => data._id === product.id);
@@ -153,11 +153,9 @@ function bindEvents(id) {
     updateItemFromCart(id, null, el.value);
   });
 
-  button.addEventListener('click', function(event){
-    let buttonClicked = event.target
-    buttonClicked.parentElement.parentElement.parentElement.remove()
-  })
-  
+  // submitForm.addEventListener("onclick", function(bindEvents){
+  //   console.log("hi");
+  // });
 }
 
 function afficherProduit() {
