@@ -73,7 +73,6 @@ localStorage.setItem("userPanier", JSON.stringify(panierInit));
 fetch("http://127.0.0.1:3000/api/products/" + id)
   .then((response) => response.json())
   .then((produit) => {
-    console.log(produit);
     img.setAttribute("src", produit.imageUrl);
     img.setAttribute("alt", produit.altTxt);
     produitName.textContent = produit.name;
@@ -87,12 +86,13 @@ fetch("http://127.0.0.1:3000/api/products/" + id)
     }
     ajouterProduit.addEventListener('click', function(){
       ajouterPanier();
+      // alert('votre produit a bien été rajouté au panier')
      if (confirm('votre produit a bien été ajouté au panier. \r\n Pour consulter votre panier cliquez sur "ok". \r\n Pour continuer votre commande cliquez sur "annuler"')){
        window.location.href = "./cart.html";
 
      }
 
-    })
+    });
 
 
   });

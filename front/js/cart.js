@@ -21,6 +21,8 @@ let orderId = document.querySelector("cartAndFormContainer");
 let cartForm = "";
 let submitForm = document.querySelector("order");
 
+const productsByColor = {};
+
 function creationElementHtml() {
   article = document.createElement("article");
   img = document.createElement("img");
@@ -89,9 +91,21 @@ function getPanier() {
 
 function InsererInfoProduit(data) {
   const panier = getPanier();
-  const indexProduit = panier.findIndex((product) => data._id === product.id);
+  const indexProduit = panier.findIndex((product) => {
+    let result = true;
+    /**
+     * c'est pour vérifier que on ne sélectionne pas une ligne qui a déjà été sélectionné avec une couleur différente
+     */
+    if (productsByColor[data._id]) {
+      result = !productsByColor[data._id].includes(product.color);
+    }
+    return data._id === product.id && result;
+  });
   if (indexProduit > -1) {
     const produit = panier[indexProduit];
+    productsByColor[data._id] = productsByColor[data._id]
+      ? [...productsByColor[data._id], produit.color]
+      : [produit.color];
     article.setAttribute("data-color", produit.color);
     produitQuantite.setAttribute("value", produit.qte);
     for (i = 0; i < data.colors.length; i++) {
@@ -153,12 +167,27 @@ function bindEvents(id) {
     updateItemFromCart(id, null, el.value);
   });
 
-  button.addEventListener('click', function(event){
-    let buttonClicked = event.target
-    buttonClicked.parentElement.parentElement.parentElement.remove()
-  })
-  
+  button.addEventListener("click", function (event) {
+    let buttonClicked = event.target;
+    buttonClicked.parentElement.parentElement.parentElement.remove();
+  });
+// reglage bug cartprice
+
+// updateCartTotal();
+afficheTotalQuantitePrix();
+
 }
+
+// function updateCartTotal(){
+//   let cartContainer = document.getElementsByClassName("cart")[0];
+//   let cartRows = cartContainer.getElementsByClassName("cart__items");
+//   for (i = 0; i < cartRows; i++) {
+//     let cartRows = cartRows[i];
+//     let priceElement = cartRows.produitPrix;
+//     let quantityElement = afficheTotalQuantitePrix();
+
+
+// }
 
 function afficherProduit() {
   let infoPanier = getPanier();
