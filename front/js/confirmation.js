@@ -12,7 +12,8 @@ function afficherProduit(orderId) {
   orderIdElement.textContent = orderId;
 }
 
-afficherProduit(orderId);
+// clear cart
+// afficherProduit(orderId);
 // function clearCart(){
 //     const clearAllItems = window.localStoragecache.clear()
 // }
