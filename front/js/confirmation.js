@@ -12,8 +12,12 @@ function afficherProduit(orderId) {
   orderIdElement.textContent = orderId;
 }
 
+
+afficherProduit(orderId);
 // clear cart
-// afficherProduit(orderId);
+
 // function clearCart(){
 //     const clearAllItems = window.localStoragecache.clear()
 // }
+
+// on peut faire un clear cart à la fin de confirmation mais cela marche mieux dans la page cart

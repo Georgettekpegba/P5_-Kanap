@@ -114,3 +114,5 @@ fetch("http://127.0.0.1:3000/api/products/" + id)
       }*/
     });
   });
+
+  // On utile le chemin de search parameters et un appel à l'API fetch pour afficher les produits en détails

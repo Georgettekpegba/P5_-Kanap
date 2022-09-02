@@ -28,6 +28,24 @@ fetch('http://127.0.0.1:3000/api/products/')
 });
 
 
+// on pouvait aussi y aller par la methodes des array pour un codage plus rapide mais on reccupère moins facilement les objets
+
+// fetch('http://127.0.0.1:3000/api/products/')
+// .then(response => response.json())
+// .then(data=> {
+
+//     console.log(data);
+//     const first = data[0];
+//     console.log(first);
+//     const item =  document.getElementById("items");
+// //    item.innerHTML +=`item`;
+//     item.innerHTML += data;
+//     // data.push(item); 
+//     item.href = "./product.html?id=42";
+//     item.push(data.image);
+// });
+
+
 
 
 

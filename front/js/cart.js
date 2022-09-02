@@ -244,7 +244,42 @@ form.addEventListener("submit", function onSubmit(e) {
   const address = formData.get("address");
   const city = formData.get("city");
 
+  const regexName = /^(([a-zA-ZÀ-ÿ]+[\s\-]{1}[a-zA-ZÀ-ÿ]+)|([a-zA-ZÀ-ÿ]+))$/;
+  const regexCity = /^(([a-zA-ZÀ-ÿ]+[\s\-]{1}[a-zA-ZÀ-ÿ]+)|([a-zA-ZÀ-ÿ]+)){1,10}$/;
+  const regexMail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4}$/;
+  const regexAddress = /^(([a-zA-ZÀ-ÿ0-9']+[\s\-]{1}[a-zA-ZÀ-ÿ0-9']+)){1,10}$/;
+
+
   const contact = { firstName, lastName, address, city, email };
+  
+  const isValid = (regexMail.test(contact.email) == true) &&
+  (regexName.test(contact.firstName) == true) &&
+  (regexName.test(contact.lastName) == true) &&
+  (regexCity.test(contact.city) == true) &&
+  (regexAddress.test(contact.address) == true); 
+
+  if (!isValid) {
+    console.log('invalid');
+    if (!regexMail.test(contact.email)) {
+      console.log('email invalide');
+    }
+    if (!regexName.test(contact.firstName)) {
+      console.log('first name invalide');
+    }
+    if (!regexName.test(contact.lastName)) {
+      console.log('last name invalide');
+    }
+    if (!regexCity.test(contact.city)) {
+      console.log('city invalide');
+    }
+    if (!regexAddress.test(contact.address)) {
+      console.log('address invalide');
+      const domElem = document.getElementById('addressErrorMsg');
+      domElem.textContent = "Votre adresse n'est pas valide";
+    }
+    return false; 
+  }
+
   const products = getPanier().map(function (product) {
     return product.id;
   });
@@ -264,110 +299,9 @@ form.addEventListener("submit", function onSubmit(e) {
 });
 
 
-// handling clear cart on fill form
-
-const buttonClearBASKET = document.getElementById("cart__item__content__settings__delete");
-buttonClearBASKET.addEventListener("click", () => {
-    clearBasket();
-    location.reload();
-});
-
-// end of clear cart
-
-
-
-// handle regex
-
-    //validation du formulaire et envoie en POST
-    const order = document.getElementById("order");
-    const regexName = /^(([a-zA-ZÀ-ÿ]+[\s\-]{1}[a-zA-ZÀ-ÿ]+)|([a-zA-ZÀ-ÿ]+))$/;
-    const regexCity = /^(([a-zA-ZÀ-ÿ]+[\s\-]{1}[a-zA-ZÀ-ÿ]+)|([a-zA-ZÀ-ÿ]+)){1,10}$/;
-    const regexMail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4}$/;
-    const regexAddress = /^(([a-zA-ZÀ-ÿ0-9]+[\s\-]{1}[a-zA-ZÀ-ÿ0-9]+)){1,10}$/;
-    const checkBox = document.getElementById("invalidCheck2");
-
-    order.addEventListener("click", (event) => {
-        // on prépare les infos pour l'envoie en POST
-        let contact = {
-            firstName: document.getElementById("firstName").value,
-            lastName: document.getElementById("lastName").value,
-            address: document.getElementById("address").value,
-            city: document.getElementById("city").value,
-            email: document.getElementById("email").value,
-        };
-        // on valide que le formulaire soit correctement rempli
-        if (
-            (regexMail.test(contact.email) == true) &
-            (regexName.test(contact.firstName) == true) &
-            (regexName.test(contact.lastName) == true) &
-            (regexCity.test(contact.city) == true) &
-            (regexAddress.test(contact.address) == true) &
-            (checkBox.checked == true)
-        ) {
-            event.preventDefault();
-
-            // on stocke l'heure et la date de la commande
-            const todayDate = new Date();
-            let nowadays = todayDate.getDate();
-            let month = todayDate.getMonth() + 1;
-            let todayHours = todayDate.getHours();
-            let todayMinutes = todayDate.getMinutes();
-
-            if (nowadays < 10) {
-                nowadays = "0" + nowadays;
-            }
-
-            if (month < 10) {
-                month = "0" + month;
-            }
-
-            if (todayHours < 10) {
-                todayHours = "0" + todayHours;
-            }
-
-            if (todayMinutes < 10) {
-                todayMinutes = "0" + todayMinutes;
-            }
-
-            const date = nowadays + "-" + month + "-" + todayDate.getFullYear();
-            const hours = todayHours + ":" + todayMinutes;
-            const fullDate = { date, hours };
-            const infoOrder = JSON.parse(localStorage.getItem("date")) || [];
-            infoOrder.push(fullDate);
-            localStorage.setItem("date", JSON.stringify(infoOrder));
-
-            let products = [];
-            for (listId of basket) {
-                products.push(listId.id);
-            }
-
-            // on envoie en POST
-            fetch("https://teddies-api.herokuapp.com/api/cameras/order", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ contact, products }),
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    localStorage.setItem("order", JSON.stringify(data));
-                    document.location.href = "order.html";
-                })
-                .catch((erreur) => console.log("erreur : " + erreur));
-        } else {
-            alert(
-                "ci est un message d'erreur"
-            );
-        }
-    });
-  
-
-// regex
-
-
-
 
 
 afficherProduit();
 afficheTotalQuantitePrix();
+
+// La page cart est dans mon cas ce qui m'a pris le plus de temps
