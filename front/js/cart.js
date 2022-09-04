@@ -301,6 +301,8 @@ form.addEventListener("submit", function onSubmit(e) {
 
 
 
+
+
 afficherProduit();
 afficheTotalQuantitePrix();
 
