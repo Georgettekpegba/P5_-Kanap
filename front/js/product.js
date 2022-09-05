@@ -67,8 +67,13 @@ function ajouterPanier() {
     });
 
     if (index > -1) {
+      const total = checkQuantity(infoPanier[index], produit.qte);
+      const canAdd = checkGlobalQuantity(produit.qte);
+      if (total === false || !canAdd ) {
+        return false;
+      }
       // on a trouvé
-      infoPanier[index].qte = infoPanier[index].qte + produit.qte;
+      infoPanier[index].qte = total;
     } else {
       // on a rien trouvé
       infoPanier.push(produit);
@@ -77,7 +82,12 @@ function ajouterPanier() {
     infoPanier.push(produit);
   }
 
+  if (!checkGlobalQuantity(produit.qte)) {
+    return false;
+  }
   savePanier(infoPanier);
+  // confirmation
+  alert("votre produit a bien été rajouté au panier");
 }
 
 //Le panier est un tableau de produits - cette entrée ne sert à rien - à effacer
@@ -101,17 +111,7 @@ fetch("http://127.0.0.1:3000/api/products/" + id)
     }
 
     ajouterProduit.addEventListener("click", function () {
-      ajouterPanier();
-      alert("votre produit a bien été rajouté au panier");
-
-      // à effacer
-      /*if (
-        confirm(
-          'votre produit a bien été ajouté au panier. \r\n Pour consulter votre panier cliquez sur "ok". \r\n Pour continuer votre commande cliquez sur "annuler"'
-        )
-      ) {
-        window.location.href = "./cart.html";
-      }*/
+      return ajouterPanier();
     });
   });
 

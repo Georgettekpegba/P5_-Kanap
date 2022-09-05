@@ -19,6 +19,7 @@ let totalPrix = document.getElementById("totalPrice");
 let orderId = document.querySelector("cartAndFormContainer");
 let cartForm = "";
 let submitForm = document.querySelector("order");
+const form = document.querySelector("#formSubmit");
 
 const productsByColor = {};
 
@@ -146,8 +147,19 @@ function afficheTotalQuantitePrix() {
         prixTotal += data.price * info.qte;
         totalQuantite.textContent = quantite;
         totalPrix.textContent = prixTotal;
+        checkCommande(prixTotal);
       });
   }
+  checkCommande(prixTotal);
+}
+
+function checkCommande(prixTotal) {
+  if (parseInt(prixTotal) === 0) {
+    form.style.display = "none";
+  } else {
+    form.style.display = "block";
+  }
+  
 }
 
 function bindEvents(id) {
@@ -169,11 +181,14 @@ function bindEvents(id) {
   button.addEventListener("click", function (event) {
     let buttonClicked = event.target;
     buttonClicked.parentElement.parentElement.parentElement.remove();
+    // reglage du bug du update cart qui se met à jour quand on supprime les modèles de kanap!
+    afficheTotalQuantitePrix();
+
   });
 // reglage bug cartprice
 
 // updateCartTotal();
-afficheTotalQuantitePrix();
+// afficheTotalQuantitePrix();
 
 
 }
@@ -210,7 +225,13 @@ function updateItemFromCart(productId, newQuantity, newColor) {
   });
   // condition de l'index
   if (index > -1) {
-    if (newQuantity) {
+    if (newQuantity && newQuantity <= 100) {
+      alert('Vous ne pouvez pas commander plus de 100 articles.');
+      return false;
+    } else if (newQuantity ) {
+      if (!checkGlobalQuantity(newQuantity)) {
+        return false;
+      }
       // eviter concatenation
       panier[index].qte = parseInt(newQuantity);
     }
@@ -226,6 +247,7 @@ function updateItemFromCart(productId, newQuantity, newColor) {
 
 function updateCartTotal() {
   let cartItemContainer = document.getElementById("cart")[0]
+  console.log(cartItemContainer);
   let cartRows = cartItemContainer.getElementsById("cart__items")
   for (let i = 0; i < cartRows.length; i++) {
     let cartRows = cartRows[i]
@@ -234,60 +256,14 @@ function updateCartTotal() {
     let price = parseFloat(priceElement.innerText.replace('€', ""));
     let quantity = quantityElement.value;
     total = total + (price+ quantity)
-
-    
   }
+  checkCommande(total);
   document.getElementsById('totalPrice')[0].innerText = total;
 
 }
 
-// // // fin correction bug
-
-//     // // correction bug
-
-//     // else(index>100) {
-//     //   alert(" votre quantité total dépasse les stock disponible");
-//     // }
-
-//     //   // fin correction
-
-//     savePanier(panier);
-
-//     }
-//   }
-// }
 
 
-// function commander() {
-//   let boutonCommander = document.getElementById("order");
-//   boutonCommander.addEventListener("click", function (event) {
-//     return totalPrix;
-//   });
-// }
-// // const formSubmit = document.querySelector("cartAndFormContainer").addEventListener('submit', function commander(event) {
-// //   if(!isValid){
-// //     e.preventDefault();    //stop form from submitting
-// // }
-// // //do whatever an submit the form
-// // });
-
-
-
-
-function commander() {
-  let boutonCommander = document.getElementById("order");
-  boutonCommander.addEventListener("click", function (event) {
-    return totalPrix;
-  });
-}
-// const formSubmit = document.querySelector("cartAndFormContainer").addEventListener('submit', function commander(event) {
-//   if(!isValid){
-//     e.preventDefault();    //stop form from submitting
-// }
-// //do whatever an submit the form
-// });
-
-const form = document.querySelector("#formSubmit");
 
 form.addEventListener("submit", function onSubmit(e) {
   e.preventDefault();
@@ -358,6 +334,6 @@ form.addEventListener("submit", function onSubmit(e) {
 
 
 afficherProduit();
-afficheTotalQuantitePrix();z
+afficheTotalQuantitePrix();
 
 
