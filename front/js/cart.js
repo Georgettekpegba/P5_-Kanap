@@ -175,6 +175,7 @@ function bindEvents(id) {
 // updateCartTotal();
 afficheTotalQuantitePrix();
 
+
 }
 
 
@@ -219,6 +220,59 @@ function updateItemFromCart(productId, newQuantity, newColor) {
     savePanier(panier);
   }
 }
+
+// // correction bug cat total par rapport au contenu panier
+
+
+function updateCartTotal() {
+  let cartItemContainer = document.getElementById("cart")[0]
+  let cartRows = cartItemContainer.getElementsById("cart__items")
+  for (let i = 0; i < cartRows.length; i++) {
+    let cartRows = cartRows[i]
+    let priceElement = cartRows.getElementByClassName("cart__price")[0];
+    let quantityElement = document.getElementsByClassName('totalQuantity')[0];
+    let price = parseFloat(priceElement.innerText.replace('€', ""));
+    let quantity = quantityElement.value;
+    total = total + (price+ quantity)
+
+    
+  }
+  document.getElementsById('totalPrice')[0].innerText = total;
+
+}
+
+// // // fin correction bug
+
+//     // // correction bug
+
+//     // else(index>100) {
+//     //   alert(" votre quantité total dépasse les stock disponible");
+//     // }
+
+//     //   // fin correction
+
+//     savePanier(panier);
+
+//     }
+//   }
+// }
+
+
+// function commander() {
+//   let boutonCommander = document.getElementById("order");
+//   boutonCommander.addEventListener("click", function (event) {
+//     return totalPrix;
+//   });
+// }
+// // const formSubmit = document.querySelector("cartAndFormContainer").addEventListener('submit', function commander(event) {
+// //   if(!isValid){
+// //     e.preventDefault();    //stop form from submitting
+// // }
+// // //do whatever an submit the form
+// // });
+
+
+
 
 function commander() {
   let boutonCommander = document.getElementById("order");
@@ -304,6 +358,6 @@ form.addEventListener("submit", function onSubmit(e) {
 
 
 afficherProduit();
-afficheTotalQuantitePrix();
+afficheTotalQuantitePrix();z
 
-// La page cart est dans mon cas ce qui m'a pris le plus de temps
+
