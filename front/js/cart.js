@@ -182,13 +182,13 @@ function bindEvents(id) {
     let buttonClicked = event.target;
     buttonClicked.parentElement.parentElement.parentElement.remove();
     // reglage du bug du update cart qui se met à jour quand on supprime les modèles de kanap!
-    afficheTotalQuantitePrix();
+    // afficheTotalQuantitePrix();
 
   });
-// reglage bug cartprice
+// reglage bug cartprice: le panier se met à jour au rafraichissement de la page
 
 // updateCartTotal();
-// afficheTotalQuantitePrix();
+afficheTotalQuantitePrix();
 
 
 }
