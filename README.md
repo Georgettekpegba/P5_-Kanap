@@ -17,9 +17,7 @@ Backend is already hosted on Heroku, but if you prefer to use it locally, follow
 •	You can then run the server with node server. The server should run on localhost with default port 3000. If the server runs on another port for any reason, this is printed to the console when the server starts, e.g. Listening on port 3001.
 •	Change the host url in the config.json file to http://localhost:3000 or whatever port your server is running on.
 Front end Javascript Documentation with JsDoc
-
-(https://git.heroku.com/kanap-ecommerce-projet5.git)  
-
+ 
 •	You can take a look at Js Documentation opening index.html in the front/docs folder with Live Server.
 ________________________________________
 Présentation du Projet
