@@ -1,6 +1,6 @@
 OC_P5_Kanap : Construisez un site e-commerce en Javascript
 
- [# Kanap #
+<img src="./front/images/logo.png" width="800" height="700">
 
 ### Back end Prerequisites ###
 
